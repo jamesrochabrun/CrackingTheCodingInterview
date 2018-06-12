@@ -48,7 +48,7 @@ extension String {
                 break
             }
         }
-        return false
+        return isP
     }
 }
 
@@ -96,7 +96,6 @@ if backwardsPrime(9900, 10000) == [9923, 9931, 9941, 9967] {
 extension String {
     
     /// ASK: does the string is ASCII or Unicode String
-    
     /// using a hashtable
     var isUnique: Bool {
         let textArray = self.map { $0.description }
@@ -107,7 +106,7 @@ extension String {
             }
             dict[char] = true
         }
-        return isValid
+        return true
     }
     
     /// using a set
@@ -118,7 +117,7 @@ extension String {
     }
 }
 
-let test = "abcdefghijkl".isUnique
+let test = "abc".isUnique
 print("t = \(test)")
 
 // 1.2 check Permutation - Given two strings write a method to decide if one is a permutation of the other
@@ -127,6 +126,7 @@ print("t = \(test)")
 /// does white space is significant
 
 extension String {
+    
     func isPermutable(with newString: String, cahracterSensitive: Bool = false) -> Bool {
         return cahracterSensitive ? (self.lowercased().sorted() == newString.lowercased().sorted()) : (self.sorted() == newString.sorted())
     }
