@@ -146,8 +146,13 @@ extension String {
     var urlFYString: String {
         let words = self.split(separator: " ")
         var urlFy = ""
-        for word in 0..<words.count {
-            urlFy += words[word] + "%20"
+        let wordsEndIndex = words.count - 1
+        for word in 0...wordsEndIndex  {
+            if wordsEndIndex == word {
+                urlFy += words[word]
+            } else {
+                urlFy += words[word] + "%20"
+            }
         }
         return urlFy
     }
