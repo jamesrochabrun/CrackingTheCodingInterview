@@ -135,8 +135,25 @@ extension String {
 let testPermuted = "abcD".isPermutable(with: "cbda", cahracterSensitive: true)
 
 
+// 1.3 URLfy write a method to replace all spaces in a string with %20
 
+// Example
+// Input: "MR jon Smith   ", 13
+//Output "Mr%20JonSmith
 
+extension String {
+    
+    var urlFYString: String {
+        let words = self.split(separator: " ")
+        var urlFy = ""
+        for word in 0..<words.count {
+            urlFy += words[word] + "%20"
+        }
+        return urlFy
+    }
+}
+
+let urlFy = "MR jon Smith   ".urlFYString
 
 
 
