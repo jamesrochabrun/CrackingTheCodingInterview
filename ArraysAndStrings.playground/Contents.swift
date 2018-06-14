@@ -126,13 +126,12 @@ print("t = \(test)")
 /// does white space is significant
 
 extension String {
-    
-    func isPermutable(with newString: String, cahracterSensitive: Bool = false) -> Bool {
-        return cahracterSensitive ? (self.lowercased().sorted() == newString.lowercased().sorted()) : (self.sorted() == newString.sorted())
+    func isPermutable(with newString: String, charSensitive: Bool = false) -> Bool {
+        return charSensitive ? (self.lowercased().sorted() == newString.lowercased().sorted()) : (self.sorted() == newString.sorted())
     }
 }
 
-let testPermuted = "abcD".isPermutable(with: "cbda", cahracterSensitive: true)
+let testPermuted = "abcD".isPermutable(with: "cbda", charSensitive: true)
 
 
 // 1.3 URLfy write a method to replace all spaces in a string with %20
@@ -159,6 +158,36 @@ extension String {
 }
 
 let urlFy = "MR jon Smith   ".urlFYString
+
+// 1.4 Palindrome permutations Given a string write a function to check if its permutation of a palindrome
+
+// dividing in two steps, first find if string its palindrome
+extension String {
+    
+    var isPal: Bool {
+        let mapText = self.map { $0.description }
+        var isPal = false
+        let maxBounds = mapText.count - 1
+        for i in 0...maxBounds {
+            if mapText[i] == mapText[maxBounds - i] {
+                isPal = true
+            } else {
+                isPal = false
+                break
+            }
+        }
+        return isPal
+    }
+    
+    func isPermutationOfAPalindrome(_ value: String) -> Bool {
+        guard self.isPal else { return false }
+        return self.isPermutable(with: value)
+    }
+}
+
+
+
+
 
 
 
