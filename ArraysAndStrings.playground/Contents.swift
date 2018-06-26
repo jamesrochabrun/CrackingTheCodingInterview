@@ -183,7 +183,84 @@ extension String {
         guard self.isPal else { return false }
         return self.isPermutable(with: value)
     }
+    
+    func getIndexOf(value: Int, in array: [Int]) -> Int {
+        
+        var leftIndex = 0
+        var rightIndex = array.count - 1
+        
+        while leftIndex <= rightIndex {
+            
+            let middleIndex = (leftIndex + rightIndex) / 2
+            let middleValue = array[middleIndex]
+            
+            if middleValue == value {
+                return middleIndex
+            }
+            if value < middleValue {
+                rightIndex = middleIndex - 1
+            }
+            if value > middleValue {
+                leftIndex = middleIndex + 1
+            }
+        }
+        return 0
+    }
+  
 }
+
+extension Array {
+    
+    func indexOfInSortedArray<T: Comparable>(_ item: T) -> Int {
+        
+        var leftIndex = 0
+        var rightIndex = self.count - 1
+        
+        while leftIndex <= rightIndex {
+            
+            let middleIndex = (leftIndex + rightIndex) / 2
+            let middleValue: T = self[middleIndex] as! T
+            
+            if middleValue == item {
+                return middleIndex // the index or the value = middleValue || true
+            }
+            if item < middleValue {
+                rightIndex = middleIndex - 1
+            }
+            if item > middleValue {
+                leftIndex = middleIndex + 1
+            }
+        }
+        return 0
+    }
+}
+
+// 1.5 there are 3 types of edit in a string - insert, remove or replace, write a function that compares if two string are one "edit" away from each other or zero edit
+
+/// EXample pale -> ple = true
+/// pales -> pale = true
+/// pale -> bale = true
+/// pale -> bake = false // two edit
+
+func isEdited(str1: String, with str2: String) -> Bool {
+    
+    let arrStr1 =  str1.map{$0.description}
+    let arrStr2 = str2.map{$0.description}
+    /// logic:
+    // a) if a character has been inserted to the string means that the string count is +1
+    // b) if a character has been inserted to the string means that the string count is +1
+    // c) if a character has been replaced from a string means that the count is the same
+
+    /// common elements will be always x
+    let commonElements = Array(Set(arrStr1).intersection(Set(arrStr2)))
+    /// substracting x - the longest string will return the number of inconsistencies between both strings
+    let maxLenght = max(arrStr1.count, arrStr2.count)
+    /// if the abs value is not 1 means that can be greater than 1 or 0 for equal strings
+    return abs(commonElements.count - maxLenght) == 1
+}
+
+isEdited(str1: "pales", with: "pale")
+
 
 
 
