@@ -2,8 +2,9 @@
 
 import UIKit
 
-// 1 check if the items of two arrays can be summed and match at least the value of the target value
+// CHAPTER 1 Arrays and Strings
 
+// extra:  1 check if the items of two arrays can be summed and match at least the value of the target value
 func sumArraysItems(_ arrayA: [Int], arrayB: [Int], toMatchAtLeast targetValue: Int) -> Bool {
     
     /// both arrays needs to have same length
@@ -34,7 +35,7 @@ let targetValue = 5
 let isValid = sumArraysItems(arrA, arrayB: arrB, toMatchAtLeast: targetValue)
 //print(isValid)
 
-// 2 isPalindrome
+// 2 extra: isPalindrome
 extension String {
     
     var isPalindrome: Bool {
@@ -55,7 +56,7 @@ extension String {
 let textTest = "robor".isPalindrome
 //print("isP = \(textTest)")
 
-// 3 Find all Backwards Read Primes between two positive given numbers (both inclusive), the second one being greater than the first one. The resulting array or the resulting string will be ordered following the natural order of the prime numbers.
+// 3 extra: Find all Backwards Read Primes between two positive given numbers (both inclusive), the second one being greater than the first one. The resulting array or the resulting string will be ordered following the natural order of the prime numbers.
 
 extension Int {
     
@@ -261,9 +262,56 @@ func isEdited(str1: String, with str2: String) -> Bool {
 
 isEdited(str1: "pales", with: "pale")
 
+// 1.6 String compression, implement a method to perform basic string compression, using the counts of repeated characters.
+// Example: aabcccccaaa should return a2b1c5a3
+// if the "compressed" string would not become smaller than the original string, your method should return the original string.
+
+/// step 1 create a String Builder, concatenation of strings in a for loop is 0(n square) lets append a character to an array instead
+
+struct StringBuilder {
+    
+    var characters: [String]
+    
+    init(characters: [String]) {
+        self.characters = characters
+    }
+    
+    var count: Int {
+        return characters.count
+    }
+    
+    var toString: String {
+        return characters.joined()
+    }
+}
+
+/// Setp 2 Create an extension of String to be able to subscript
+extension String {
+    subscript (i: Int) -> Character {
+        return self[index(startIndex, offsetBy: i)]
+    }
+}
+
+/// Step 3 build the function
+func compress(string: String) -> String {
+    
+    var compressed = StringBuilder(characters: [])
+    var countConsecutive: Int = 0
+    
+    for i in 0..<string.count {
+        countConsecutive += 1
+        // if next character is different than current, append this char to result
+        if i + 1 >= string.count  || string[i] != string[i + 1] {
+            compressed.characters.append("\(string[i])")
+            compressed.characters.append("\(countConsecutive)")
+            countConsecutive = 0
+        }
+    }
+    return compressed.count < string.count ? compressed.toString : string
+}
 
 
-
+print(compress(string: "aabcccccaaa"))
 
 
 
